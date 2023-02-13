@@ -10,6 +10,7 @@ public class task3 {
         iScanner.close();
         String[] calc = expression.split(" ");
         int result = 0;
+        double result1 = 0;
         switch (calc[1]) {
             case "+":
                 result = Integer.parseInt(calc[0]) + Integer.parseInt(calc[2]);
@@ -21,9 +22,12 @@ public class task3 {
                 result = Integer.parseInt(calc[0]) * Integer.parseInt(calc[2]);
                 break;
             case "/":
-            result = Integer.parseInt(calc[0]) / Integer.parseInt(calc[2]);
+            result1 = Double.parseDouble(calc[0]) / Double.parseDouble(calc[2]);
             break;
         }
+        if (calc[1] == "/") {
+            System.out.println("result = " + result1);
+        } else 
         System.out.println("result = " + result);
     }
 }
