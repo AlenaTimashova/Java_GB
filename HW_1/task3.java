@@ -6,52 +6,68 @@ import java.io.IOException;
 
 //Реализовать простой калькулятор (+ - / *)
 import java.util.Scanner;
+import java.util.Stack;
 public class task3 {
     public static void main(String[] args) throws IOException {
-        Logger loger = Logger.getLogger(task3.class.getName());
-        loger.setLevel(Level.INFO);
+        // Logger loger = Logger.getLogger(task3.class.getName());
+        // loger.setLevel(Level.INFO);
 
-        // String currentPath = Paths.get("")
-        //                           .toAbsolutePath()
-        //                           .toString();
-
-        // String logsPath = currentPath + "\\logs.txt";
-
-        FileHandler fh = new FileHandler("logs.txt");
-        loger.addHandler(fh);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-
+        // FileHandler fh = new FileHandler("logs.txt");
+        // loger.addHandler(fh);
+        // SimpleFormatter formatter = new SimpleFormatter();
+        // fh.setFormatter(formatter);
+        Stack<Double> stk = new Stack<>();
         Scanner iScanner = new Scanner(System.in);
         System.out.printf("Input expression devided by spaces: ");
         String expression = iScanner.nextLine();
-        iScanner.close();
-        
         String[] calc = expression.split(" ");
-        loger.info(Arrays.toString(calc));
+        //loger.info(Arrays.toString(calc));
         
-        int result = 0;
-        Double d = Double.valueOf(result);
-        switch (calc[1]) {
-            case "+":
-                result = Integer.parseInt(calc[0]) + Integer.parseInt(calc[2]);
-                loger.info(Integer.toString(result));
-                break;
-            case "-":
-            result = Integer.parseInt(calc[0]) - Integer.parseInt(calc[2]);
-            loger.info(Integer.toString(result));
+        double result = calculate(Double.parseDouble(calc[0]), Double.parseDouble(calc[2]), calc[1]);
+        stk.push(result);
+        System.out.println(result);
+        boolean exit = false;
+        while(!exit){
+            System.out.println("Enter 'cancel' to cancel previous operation\n next sign and digit devided by space to calculate:\nor 'exit' to exit the calculator: ");
+            String[] choice = iScanner.nextLine().split(" ");
+            if(choice[0].equals("cancel")){
+                stk.pop();
+            } else if(choice[0].equals("exit")) {
+                exit = true;
+            } else
+            {
+                result = calculate(stk.peek(), Double.parseDouble(choice[1]), choice[0]);
+                stk.push(result);
+                System.out.println(result);
+            }
+        }
+        
+        iScanner.close();
+    }
+    public static Double calculate(double x, double y, String s) {
+        double result = 0;
+        
+        switch (s){
+            case "+": 
+            result = x + y;
             break;
-            case "*":
-                result = Integer.parseInt(calc[0]) * Integer.parseInt(calc[2]);
-                loger.info(Integer.toString(result));
-                break;
+
+            case "-":
+            
+            result = x - y;
+            break;
+
             case "/":
             
-            d = Double.parseDouble(calc[0]) / Double.parseDouble(calc[2]);
-            loger.info(Double.toString(d));
+            result = x / y;
+            break;
+
+            case "*":
+            
+            result = x * y;
             break;
         }
-        if(calc[1].equals("/")) System.out.println("result = " + d);
-        else  System.out.println("result = " + result);
+    
+        return result;
     }
 }
