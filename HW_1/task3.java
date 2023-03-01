@@ -34,8 +34,7 @@ public class task3 {
                 stk.pop();
             } else if(choice[0].equals("exit")) {
                 exit = true;
-            } else
-            {
+            } else {
                 result = calculate(stk.peek(), Double.parseDouble(choice[1]), choice[0]);
                 stk.push(result);
                 System.out.println(result);
