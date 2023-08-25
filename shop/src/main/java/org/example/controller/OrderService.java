@@ -35,7 +35,7 @@ public class OrderService {
      * @throws SQLException Если возникнет проблема с базой данных.
      */
     public void createOrder(Order order) throws SQLException {
-        // Дополнительная логика создания заказа может быть реализована здесь, например, валидация данных заказа
+
         repository.save(order);
     }
 
